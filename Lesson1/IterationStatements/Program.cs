@@ -13,30 +13,20 @@ namespace IterationStatements
         /// <param name="args">The run arguments</param>
         static void Main(string[] args)
         {
-            // print numbers from 0 to 4
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 1000; i++)
             {
+                if (i == 500)
+                {
+                    break;
+                }
                 Console.WriteLine(i);
             }
 
-            // create number
-            var number = 0;
-
-            // print number while it is less than 0
-            while (number < 5)
+            var a = 0;
+            while (a < 10)
             {
-                Console.WriteLine(number);
-
-                number++; // same as number = number + 1
+                Console.WriteLine("smth");
             }
-
-            do
-            {
-                Console.WriteLine(number);
-
-                number++;
-
-            } while (number < 5);
         }
     }
 }
