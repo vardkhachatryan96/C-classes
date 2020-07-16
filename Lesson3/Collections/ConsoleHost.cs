@@ -17,7 +17,7 @@ namespace Collections
         public void Run()
         {
             // run list demo
-            //ListDemo.Run();
+            ListDemo.Run();
 
             // run stack demo
             //StackDemo.Run();

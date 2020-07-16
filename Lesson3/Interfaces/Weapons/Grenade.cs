@@ -3,7 +3,7 @@
     /// <summary>
     /// Grenade model
     /// </summary>
-    public class Grenade
+    public class Grenade : IWeapon
     {
         /// <summary>
         /// Create grenade instance
@@ -18,5 +18,10 @@
         /// The grenade name
         /// </summary>
         public string Name { get; private set; }
+
+        public void Shoot()
+        {
+            System.Console.WriteLine("Shoot grenade");
+        }
     }
 }

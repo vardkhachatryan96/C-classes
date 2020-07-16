@@ -3,7 +3,7 @@
     /// <summary>
     /// Knife model
     /// </summary>
-    public class Knife
+    public class Knife : IWeapon    
     {
         /// <summary>
         /// Create knife instance
@@ -18,5 +18,10 @@
         /// The knife name
         /// </summary>
         public string Name { get; private set; }
+
+        public void Shoot()
+        {
+            System.Console.WriteLine("Shoot knife");
+        }
     }
 }

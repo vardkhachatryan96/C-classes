@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Collections.Lists
@@ -16,9 +17,20 @@ namespace Collections.Lists
             // List creation in c#
             // List with default capacity  
             List<int> listExample1 = new List<int>();
-            
+
+            Console.WriteLine("Capacity Is: " + listExample1.Capacity);
+
+            listExample1.Add(1);
+            Console.WriteLine("Capacity Is: " + listExample1.Capacity);
+
+            listExample1.Add(2);
+            listExample1.Add(3);
+            listExample1.Add(4);
+            listExample1.Add(5);
+            Console.WriteLine("Capacity Is: " + listExample1.Capacity);
+
             // List with capacity = 5  
-            List<string> listExample2 = new List<string>(5);
+            List<string> listExample2 = new List<string>(100);
 
             // List created from array
             List<string> animalsList = new List<string>(new string[]{ "Cow", "Camel", "Elephant" });
@@ -68,7 +80,7 @@ namespace Collections.Lists
 
             // how to find an element in a C# List
             int idx = listExample2.IndexOf("Naveen Sharma");
-            if (idx > 0)
+            if (idx >= 0)
             {
                 Console.WriteLine($"Item index in List is: {idx}");
             }
@@ -79,17 +91,6 @@ namespace Collections.Lists
 
             // how to sort a C# List elements
             listExample2.Sort();
-
-            //Console.WriteLine("Capacity Is: " + listExample1.Capacity);
-
-            //listExample1.Add(1);
-            //Console.WriteLine("Capacity Is: " + listExample1.Capacity);
-
-            //listExample1.Add(2);
-            //listExample1.Add(3);
-            //listExample1.Add(4);
-            //listExample1.Add(5);
-            //Console.WriteLine("Capacity Is: " + listExample1.Capacity);
         }
     }
 }
