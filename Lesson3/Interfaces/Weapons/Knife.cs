@@ -19,6 +19,9 @@
         /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// Knife shoot
+        /// </summary>
         public void Shoot()
         {
             System.Console.WriteLine("Shoot knife");

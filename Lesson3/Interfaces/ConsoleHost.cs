@@ -12,21 +12,26 @@ namespace Interfaces
         /// </summary>
         public void Run()
         {
+            // create player
             var player = new Player("player1");
 
-            var gun1 = new Gun("gun1");
-            player.AddWeapon(gun1);
+            // add a gun to player weapon collection
+            player.AddWeapon(new Gun("gun1"));
 
+            // add a knife to player weapon collection
             player.AddWeapon(new Knife("knife"));
 
+            // get player weapons
             var weapons = player.GetWeapons();
 
             foreach (var item in weapons)
             {
-                if (item is Gun)
+                if (item is Gun gun)
                 {
-                    var gun = (Gun)item;
+                    var gunName = gun.Name;
+                    System.Console.WriteLine(gunName);
                 }
+
                 item.Shoot();
             }
         }

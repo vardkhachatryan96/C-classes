@@ -13,40 +13,41 @@ namespace Collections.Stack
         /// </summary>
         public static void Run()
         {
-            while (true)
+            Console.Write("Please insert the expression want to check: ");
+            var input = Console.ReadLine();
+
+            if (CheckParenthesis(input))
             {
-                Console.Write("Please insert the expression want to check: ");
-                var input = Console.ReadLine();
-
-                if (input.Equals("q"))
-                {
-                    break;
-                }
-
-                if (CheckParenthesis(input))
-                {
-                    Console.WriteLine("The expression is correct.");
-                }
-                else
-                {
-                    Console.WriteLine("The expression is incorrect.");
-                }
+                Console.WriteLine("The expression is correct");
+            }
+            else
+            {
+                Console.WriteLine("WARN: The expression is incorrect");
             }
         }
 
+        /// <summary>
+        /// Check the expression parenthesis
+        /// </summary>
+        /// <param name="expression">The given string</param>
+        /// <returns></returns>
         private static bool CheckParenthesis(string expression)
         {
-            Stack<char> stack = new Stack<char>(expression.Length);
+            // declare an empty character stack
+            Stack<char> stack = new Stack<char>();
 
             foreach (var symb in expression)
             {
-                if (symb == '(')
+                // keep symb in stack if it is a starting parenthesis
+                if (symb == '{')
                 {
                     stack.Push(symb);
                 }
 
-                if (symb.Equals(')'))
+                // remove symb from stack if it is an ending parenthesis
+                if (symb.Equals('}'))
                 {
+                    // case we find an ending parenthesis without a pair 
                     if (stack.Count == 0)
                     {
                         return false;
@@ -56,6 +57,7 @@ namespace Collections.Stack
                 }
             }
 
+            //case of starting parenthesis without a closing parenthesis
             if (stack.Count != 0)
             {
                 return false;

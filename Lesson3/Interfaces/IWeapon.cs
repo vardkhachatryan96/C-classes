@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Interfaces
+﻿namespace Interfaces
 {
+    /// <summary>
+    /// Interface for weapon
+    /// </summary>
     public interface IWeapon
     {
+        /// <summary>
+        /// Shoot functionality
+        /// </summary>
         void Shoot();
     }
 }

@@ -29,38 +29,59 @@ namespace Collections.Queue
 
                 documentQueue.Enqueue(inputDocName);
 
-                MangeQueue();
+                // manage the queue
+                ManageQueue();
             }
         }
 
-        private static void MangeQueue()
+        /// <summary>
+        /// Process the document
+        /// </summary>
+        /// <param name="docName">The doc name to process</param>
+        private static void ManageQueue()
         {
+            // no item in queue or is still in process
             if (documentQueue.Count == 0 || docIsProcessing)
             {
                 return;
             }
 
-            var currentDoc = documentQueue.Dequeue();
+            // get current element
+            var curElement = documentQueue.Dequeue();
 
-            docIsProcessing = true;
-            ProcessDoc(currentDoc);
+            ProcessDoc(curElement);
         }
 
-        private static void ProcessDoc(string currentDoc)
+        /// <summary>
+        /// Process the document
+        /// </summary>
+        /// <param name="docName">The doc name</param>
+        private static void ProcessDoc(string docName)
         {
+            // doc processing started
+            docIsProcessing = true;
+
             var random = new Random();
             int timeMS = random.Next(5000, 10000);
 
             // set delay for processing
-            Task.Delay(timeMS).ContinueWith(t => OnProcessDocComplete(currentDoc, timeMS / 1000f));
+            Task.Delay(timeMS).ContinueWith(t => OnProcessDocComplete(docName, timeMS / 1000f));
         }
 
-        private static void OnProcessDocComplete(object docName, float time)
+        /// <summary>
+        /// Work after doc processing is complete
+        /// </summary>
+        /// <param name="curDocument">The current document</param>
+        /// <param name="timeSeconds">The time doc processed</param>
+        private static void OnProcessDocComplete(string curDocument, float timeSeconds)
         {
+            // processing is complete
             docIsProcessing = false;
-            Console.WriteLine($"Processing of \"{docName}\" took {time} seconds");
 
-            MangeQueue();
+            Console.WriteLine($"Processing of \"{curDocument}\" took {timeSeconds} seconds.");
+
+            // process next doc
+            ManageQueue();
         }
     }
 }

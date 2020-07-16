@@ -23,7 +23,7 @@ namespace Collections
             //StackDemo.Run();
 
             // run queue demo
-            QueueDemo.Run();
+            //QueueDemo.Run();
         }
     }
 }
