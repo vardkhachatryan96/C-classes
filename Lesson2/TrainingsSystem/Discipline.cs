@@ -48,9 +48,13 @@ namespace TrainingsSystem
             this.Students.Add(student);
         }
 
-        public List<Lecturer> GetLecturers()
+        /// <summary>
+        /// Get Lecturers collection
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Lecturer> GetLecturers()
         {
-            return new List<Lecturer> (this.Lecturers);
+            return this.Lecturers;
         }
 
         /// <summary>

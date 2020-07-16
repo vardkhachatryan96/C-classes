@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace TrainingsSystem
 {
@@ -25,7 +26,7 @@ namespace TrainingsSystem
 
             disciplin.AddLecturer(lecturer1);
 
-            disciplin.GetLecturers().Clear();
+            disciplin.GetLecturers().ToList().Clear();
         }
     }
 }
