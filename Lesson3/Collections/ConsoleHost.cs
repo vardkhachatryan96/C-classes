@@ -17,13 +17,13 @@ namespace Collections
         public void Run()
         {
             // run list demo
-            ListDemo.Run();
+            //ListDemo.Run();
 
             // run stack demo
             //StackDemo.Run();
 
             // run queue demo
-            //QueueDemo.Run();
+            QueueDemo.Run();
         }
     }
 }
