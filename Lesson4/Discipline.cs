@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Lesson4.Exceptions;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
 namespace TrainingsSystem
 {
@@ -54,6 +56,14 @@ namespace TrainingsSystem
         /// <param name="student"></param>
         public void AddStudent(Student student)
         {
+            foreach (var st in this.Students)
+            {
+                if (st.Id == student.Id)
+                {
+                    throw new DuplicateLecturerException(student.Name);
+                }
+            }
+
             this.Students.Add(student);
         }        
 
@@ -63,6 +73,11 @@ namespace TrainingsSystem
         /// <param name="lesson"></param>
         public void AddLesson(Lesson lesson)
         {
+            if (this.Lecturers.Count == 0)
+            {
+                throw new AddingToLessonsCollectionException("There are no any lecturers in discipline!");
+            }
+
             this.Lessons.Add(lesson);
         }
 
