@@ -19,14 +19,31 @@ namespace Lesson5.Exercise
             var disciplines = this.InitDisciplines();
 
             // Find the count of all students
+            var allStudentsCount = disciplines.Select(discipline => discipline.GetStudents()).Sum(st => st.Count());
 
             // Find the names of students for a discipline which has the maximum number of students
+            // option 1
+            var maxStudentCount = disciplines.Max(discipline => discipline.GetStudents().Count());
+            var biggestDisciplineOp1 = disciplines
+                .Where(discipline => discipline.GetStudents().Count() == maxStudentCount).FirstOrDefault();
+
+            // option 2
+            var biggestDisciplineOp2 = disciplines.OrderByDescending(o => o.GetStudents().Count()).FirstOrDefault();
 
             // Find the name of the discipline with the lesson which has the earliest start date
+            var earliestDate = disciplines.SelectMany(discipline => discipline.GetLessons()).Min(m => m.StartDate);
+
+            var earliestLessons = disciplines.SelectMany(discipline => discipline.GetLessons()
+                .Where(w => w.StartDate == earliestDate));
+
+            var earliestDiscipline = disciplines.Where(discipline => discipline.GetLessons().Any(a => earliestLessons.Contains(a)));
 
             // Find the name of the student who participates in the maximum number of disciplines
+            var mostActiveStudent = disciplines.SelectMany(discipline => discipline.GetStudents()).GroupBy(g => new { g.Name, g.Surname })
+                .OrderByDescending(o => o.Count()).Select(s => s.Key).FirstOrDefault();
 
             // Find the names of disciplines sorted by the number of students assigned to the discipline
+            var sortedDiscipline = disciplines.OrderByDescending(discipline => discipline.GetStudents().Count());
         }
 
         /// <summary>
@@ -72,12 +89,7 @@ namespace Lesson5.Exercise
                 new Student("Ann", "Jones"),
                 new Student("Mary", "Wilson"),
                 new Student("William", "Jackson"),
-                new Student("Robert", "Harris"),
-                new Student("Sophia", "Turner"),
-                new Student("Edward", "Wood"),
-                new Student("Martha", "Hall"),
-                new Student("Joseph", "Thompson"),
-                new Student("Chloe", "Brown")
+             
             };
         }
 

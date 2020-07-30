@@ -24,13 +24,6 @@ namespace Lesson5.Examples
             this.QueryAnimalData();
         }
 
-        public class Dog
-        {
-            public int ID { get; set; }
-
-            public string Name { get; set; }
-        }
-
         /// <summary>
         /// Query list of strings
         /// </summary>
@@ -45,6 +38,21 @@ namespace Lesson5.Examples
 
             // Get strings with spaces and put in 
             // alphabetical order
+            //var dogsWithSpaces = new List<string>();
+            //foreach (var dog in dogs)
+            //{
+            //    if (dog.Contains(" "))
+            //    {
+            //        dogsWithSpaces.Add(dog);
+            //    }
+            //}
+
+            //dogsWithSpaces.Sort();
+
+            var dogsWithSpaces = from dog in dogs
+                                 where dog.Contains(" ")
+                                 orderby dog ascending
+                                 select dog;
         }
 
         /// <summary>
@@ -75,6 +83,14 @@ namespace Lesson5.Examples
             };
 
             // Get big dogs which weight is greater than 70 and height is greater than 20
+            //var bigDogs = from animal in animalList
+            //              where (animal.Weight > 70) && (animal.Height > 20)
+            //              select animal;
+
+            //animalList.Find(delegate (Animal animal) { return animal.ID == Guid.NewGuid(); });
+            //animalList.Find(animal => { return animal.ID == Guid.NewGuid(); });
+
+            var bigDogs = animalList.Where(animal => animal.Weight > 70 && animal.Height > 20).Select(animal => animal);
         }
 
         /// <summary>
@@ -140,15 +156,44 @@ namespace Lesson5.Examples
             };
 
 
-            // select animal name and heght group
+            // select animal name and height group
+            var animalHeightGroup = from animal in animals
+                                    select new
+                                    {
+                                        AnimalName = animal.Name,
+                                        AnimalHeight = animal.Height
+                                    };
+
+            var animalHeightGroupList = animalHeightGroup.ToList();
 
             // Join info in owners and animals using
             // equal values for IDs
             // Store values for animal and owner
+            var innerJoinOp1 = from animal in animals
+                               join owner in owners on animal.OwnerID
+                               equals owner.ID
+                               select new { OwnerName = owner.Name, AnimalName = animal.Name };
+
+            var innerJoinOp2 = animals.Join(owners, animal => animal.OwnerID, owner => owner.ID,
+                (animal, owner) => new { OwnerName = owner.Name, AnimalName = animal.Name });
 
             // Get all animals and put them in a
             // newly created owner group if their
             // IDs match the owners ID 
+            var groupJoinOp1 = from owner in owners
+                               orderby owner.ID
+                               join animal in animals on owner.ID
+                               equals animal.OwnerID into ownerGroup
+                               select new
+                               {
+                                   Owner = owner.Name,
+                                   Animals = from owner1 in ownerGroup
+                                             orderby owner1.Name
+                                             select owner1
+                               };
+
+            var groupJoinOp2 = owners.OrderBy(o => o.ID).GroupJoin(animals, owner => owner.ID, animal => animal.OwnerID,
+                (owner, animal) => new { Owner = owner.Name, Animals = animal.OrderBy(o => o.Name) });
         }
     }
 }
