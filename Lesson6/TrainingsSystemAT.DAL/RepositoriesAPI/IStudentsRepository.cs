@@ -7,6 +7,6 @@ namespace TrainingsSystemAT.DAL.RepositoriesAPI
     {
         int GetAllStudentsCount();
 
-        IEnumerable<Person> GetAllPersonsByDisciplineId(int disciplineId, int roleId);
+        IEnumerable<Person> GetAllStudentsByDisciplineId(int disciplineId, int roleId);
     }
 }

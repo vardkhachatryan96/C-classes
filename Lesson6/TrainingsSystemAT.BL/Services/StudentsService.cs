@@ -21,7 +21,7 @@ namespace TrainingsSystemAT.BL.Services
 
         public IEnumerable<PersonModel> GetAllStudentsByDisciplineName(DisciplineType discipline)
         {
-            return this._studentsMapper.Map(this._studentsRepo.GetAllPersonsByDisciplineId((int)discipline, (int)RoleType.Student));
+            return this._studentsMapper.Map(this._studentsRepo.GetAllStudentsByDisciplineId((int)discipline, (int)RoleType.Student));
         }
 
         public int GetAllStudentsCount()
