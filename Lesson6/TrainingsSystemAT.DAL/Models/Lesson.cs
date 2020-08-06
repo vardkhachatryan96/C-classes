@@ -1,10 +1,15 @@
 ﻿using System;
-using TrainingsSystemAT.DAL.Models.Common;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TrainingsSystemAT.DAL.Models
 {
-    public class Lesson : BaseEntity
+    public class Lesson 
     {
+        [Key]
+        [ForeignKey("LessonFK")]
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public DateTime StartDate { get; set; }

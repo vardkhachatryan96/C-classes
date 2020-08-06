@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TrainingsSystemAT.BL.Services;
 using TrainingsSystemAT.BL.ServicesAPI;
+using TrainingsSystemAT.BL.Types;
 using TrainingsSystemAT.Mappers;
 using TrainingsSystemAT.Models;
 
@@ -21,9 +22,9 @@ namespace TrainingsSystemAT.Controllers
             return this._studentsService.GetAllStudentsCount();
         }
 
-        internal IEnumerable<Student> GetAllStudentsByDisciplineName(string disciplineName)
+        internal IEnumerable<StudentViewModel> GetAllStudentsByDisciplineName(DisciplineType discipline)
         {
-            return StudentsMapper.Map(this._studentsService.GetAllStudentsByDisciplineName(disciplineName));
+            return StudentsMapper.Map(this._studentsService.GetAllStudentsByDisciplineName(discipline));
         }
     }
 }

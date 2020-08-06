@@ -7,33 +7,33 @@ namespace TrainingsSystemAT.Models
     /// <summary>
     /// The discipline model
     /// </summary>
-    public class Discipline
+    public class DisciplineViewModel
     {
         /// <summary>
         /// The lecturers collection
         /// </summary>
-        private readonly List<Lecturer> Lecturers;
+        private readonly List<LecturerViewModel> Lecturers;
 
         /// <summary>
         /// The students collection
         /// </summary>
-        private readonly List<Student> Students;
+        private readonly List<StudentViewModel> Students;
 
         /// <summary>
         /// The lessons collection
         /// </summary>
-        private readonly List<Lesson> Lessons;
+        private readonly List<LessonViewModel> Lessons;
 
         /// <summary>
         /// Init the discipline
         /// </summary>
         /// <param name="name"></param>
-        public Discipline(string name)
+        public DisciplineViewModel(string name)
         {
             this.Name = name;
-            this.Students = new List<Student>();
-            this.Lessons = new List<Lesson>();
-            this.Lecturers = new List<Lecturer>();
+            this.Students = new List<StudentViewModel>();
+            this.Lessons = new List<LessonViewModel>();
+            this.Lecturers = new List<LecturerViewModel>();
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace TrainingsSystemAT.Models
         /// Add lecturer to lecturers list
         /// </summary>
         /// <param name="lecturer"></param>
-        public void AddLecturer(Lecturer lecturer)
+        public void AddLecturer(LecturerViewModel lecturer)
         {
             this.Lecturers.Add(lecturer);
         }
@@ -54,7 +54,7 @@ namespace TrainingsSystemAT.Models
         /// Add lecturers to lecturers list
         /// </summary>
         /// <param name="lecturers"></param>
-        public void AddLecturers(List<Lecturer> lecturers)
+        public void AddLecturers(List<LecturerViewModel> lecturers)
         {
             this.Lecturers.AddRange(lecturers);
         }
@@ -63,7 +63,7 @@ namespace TrainingsSystemAT.Models
         /// Add student to students list
         /// </summary>
         /// <param name="student"></param>
-        public void AddStudent(Student student)
+        public void AddStudent(StudentViewModel student)
         {
             if (this.Students.Select(s => s.Id).Contains(student.Id))
             {
@@ -78,7 +78,7 @@ namespace TrainingsSystemAT.Models
         /// Add students to students list
         /// </summary>
         /// <param name="students"></param>
-        public void AddStudents(List<Student> students)
+        public void AddStudents(List<StudentViewModel> students)
         {
             var noDuplicateStudents = students.Where(w => !this.Students.Select(s => s.Id).Contains(w.Id));
 
@@ -89,7 +89,7 @@ namespace TrainingsSystemAT.Models
         /// Add lesson to lesson list
         /// </summary>
         /// <param name="lesson"></param>
-        public void AddLesson(Lesson lesson)
+        public void AddLesson(LessonViewModel lesson)
         {
             if (this.Lecturers.Count == 0)
             {
@@ -104,7 +104,7 @@ namespace TrainingsSystemAT.Models
         /// Add lessons to lesson list
         /// </summary>
         /// <param name="lessons"></param>
-        public void AddLessons(List<Lesson> lessons)
+        public void AddLessons(List<LessonViewModel> lessons)
         {
             if (this.Lecturers.Count == 0)
             {
@@ -119,7 +119,7 @@ namespace TrainingsSystemAT.Models
         /// Get Lecturers collection
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Lecturer> GetLecturers()
+        public IEnumerable<LecturerViewModel> GetLecturers()
         {
             return this.Lecturers;
         }
@@ -128,7 +128,7 @@ namespace TrainingsSystemAT.Models
         /// Get Students collection
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Student> GetStudents()
+        public IEnumerable<StudentViewModel> GetStudents()
         {
             return this.Students;
         }
@@ -137,7 +137,7 @@ namespace TrainingsSystemAT.Models
         /// Get Lessons collection
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Lesson> GetLessons()
+        public IEnumerable<LessonViewModel> GetLessons()
         {
             return this.Lessons;
         }

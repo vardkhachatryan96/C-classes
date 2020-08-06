@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using TrainingsSystemAT.DAL.Models;
+using TrainingsSystemAT.BL.Models;
+using TrainingsSystemAT.BL.Types;
 
 namespace TrainingsSystemAT.BL.ServicesAPI
 {
@@ -7,6 +8,6 @@ namespace TrainingsSystemAT.BL.ServicesAPI
     {
         int GetAllStudentsCount();
         
-        IEnumerable<Person> GetAllStudentsByDisciplineName(string disciplineName);
+        IEnumerable<PersonModel> GetAllStudentsByDisciplineName(DisciplineType disciplineName);
     }
 }

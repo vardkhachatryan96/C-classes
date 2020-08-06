@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TrainingsSystemAT.BL.Models;
 using TrainingsSystemAT.Models;
 
 namespace TrainingsSystemAT.Mappers
 {
     public class StudentsMapper
     {
-        public static IEnumerable<Student> Map(IEnumerable<DAL.Models.Person> persons)
+        public static IEnumerable<StudentViewModel> Map(IEnumerable<PersonModel> persons)
         {
-            return new List<Student>(persons.Select(s => new Student(s.Name, s.Surname)
+            return new List<StudentViewModel>(persons.Select(s => new StudentViewModel(s.Name, s.Surname)
             {
                 Id = s.Id
             }));

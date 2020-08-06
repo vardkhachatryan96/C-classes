@@ -3,14 +3,14 @@
     /// <summary>
     /// The Person model
     /// </summary>
-    public class Person
+    public class PersonViewModel
     {
         /// <summary>
         /// Init the person
         /// </summary>
         /// <param name="name">The person name</param>
         /// <param name="surname">The person surname</param>
-        public Person(string name, string surname)
+        public PersonViewModel(string name, string surname)
         {
             this.Name = name;
             this.Surname = surname;

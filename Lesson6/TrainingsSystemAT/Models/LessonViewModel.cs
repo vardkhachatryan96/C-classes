@@ -5,14 +5,14 @@ namespace TrainingsSystemAT.Models
     /// <summary>
     /// The Lesson model
     /// </summary>
-    public class Lesson
+    public class LessonViewModel
     {
         /// <summary>
         /// Create a lesson instance
         /// </summary>
         /// <param name="name">The lesson name</param>
         /// <param name="startDate">The lesson start date</param>
-        public Lesson(string name)
+        public LessonViewModel(string name)
         {
             this.Name = name;
         }
@@ -22,7 +22,7 @@ namespace TrainingsSystemAT.Models
         /// </summary>
         /// <param name="name">The lesson name</param>
         /// <param name="startDate">The lesson start date</param>
-        public Lesson(string name, DateTime startDate, DateTime endDate) : this(name)
+        public LessonViewModel(string name, DateTime startDate, DateTime endDate) : this(name)
         {
             this.StartDate = startDate;
             this.EndDate = endDate;

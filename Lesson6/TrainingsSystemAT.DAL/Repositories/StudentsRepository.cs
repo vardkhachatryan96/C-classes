@@ -7,11 +7,10 @@ namespace TrainingsSystemAT.DAL.Repositories
 {
     public class StudentsRepository : IStudentsRepository
     {
-        public IEnumerable<Person> GetAllStudentsByDisciplineName(string disciplineName)
+        public IEnumerable<Person> GetAllPersonsByDisciplineId(int disciplineId, int roleId)
         {
             using var context = new TrainingsSystemATDbContext();
-            var disciplineId = context.Disciplines.Where(w => w.Name == disciplineName).Select(s => s.Id).FirstOrDefault();
-            return context.Persons.Where(w=>w.RoleId == 1)
+            return context.Persons.Where(w=>w.RoleId == roleId)
                 .Join(context.DisciplinePersons.Where(w => w.DisciplineId == disciplineId), person => person.Id,
                       dperson => dperson.PersonId, (person, dperson) => new Person
                       {

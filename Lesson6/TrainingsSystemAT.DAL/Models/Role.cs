@@ -1,9 +1,14 @@
-﻿using TrainingsSystemAT.DAL.Models.Common;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TrainingsSystemAT.DAL.Models
 {
-    public class Role : BaseEntity
+    public class Role
     {
+        [Key]
+        [ForeignKey("RoleFK")]
+        public int Id { get; set; }
+
         public string RoleName { get; set; }
     }
 }
