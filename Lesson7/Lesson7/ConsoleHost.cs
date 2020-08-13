@@ -1,8 +1,5 @@
 ﻿using Lesson7.DAL;
-using Lesson7.DAL.Models;
-using Lesson7.Extend;
 using OnlineStore.DAL.Data;
-using System;
 using System.Threading;
 
 namespace Lesson7
@@ -23,36 +20,14 @@ namespace Lesson7
 
             var allOrders = this._purchasedOrdersRepository.GetAllPurchases();
 
-            foreach (var order in allOrders)
-            {
-                Thread t = new Thread(new ParameterizedThreadStart(ProcessItem));
-                t.Start(order);
-            }
-        }
+            var orderProducer = new PurchasedOrdersProducer(allOrders);
+            Thread orderProducerThread = new Thread(orderProducer.Produce);
+            orderProducerThread.Start();
 
-        public void ProcessItem(object order)
-        {
-            this.FindItem(order.As<PurchasedOrder>());
-            this.PackItem(order.As<PurchasedOrder>());
-            this.ShipItem(order.As<PurchasedOrder>());
+            var orderProcessor = new PurchasedOrderProcessor(orderProducer.GetOrdersQueue());
+            Thread orderProcessorThread = new Thread(orderProcessor.ProcessItem);
+            orderProcessorThread.Start();
         }
-
-        public void FindItem(PurchasedOrder order)
-        {
-            Thread.Sleep(2000);
-            Console.WriteLine($"Item found {order.ItemName}.");
-        }
-
-        public void PackItem(PurchasedOrder order)
-        {
-            Thread.Sleep(1000);
-            Console.WriteLine($"Item packed {order.ItemName}.");
-        }
-
-        public void ShipItem(PurchasedOrder order)
-        {
-            Thread.Sleep(2000);
-            Console.WriteLine($"Item shiped {order.ItemName}.");
-        }
+        
     }
 }
