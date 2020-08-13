@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading;
 
 namespace Lesson7
 {
@@ -20,10 +20,12 @@ namespace Lesson7
             while (true)
             {
                 var newOrder = this.GenerateOrder();
+                Console.WriteLine($"Item name is {newOrder.ItemName}");
                 lock (this.lockObject)
                 {
                     this.ordersQueue.Enqueue(newOrder);
                 }
+                Thread.Sleep(5000);
             }
         }
 

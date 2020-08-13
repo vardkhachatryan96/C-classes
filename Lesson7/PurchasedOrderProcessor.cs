@@ -19,20 +19,20 @@ namespace Lesson7
         {
             while (true)
             {
-                if (this.ordersQueue.Count > 0)
+                var order = default(PurchasedOrder);
+                lock (this.lockObject)
                 {
-                    var order = default(PurchasedOrder);
-                    lock (this.lockObject)
+                    if (this.ordersQueue.Count > 0)
                     {
                         order = this.ordersQueue.Dequeue();
                     }
-                    if (order != default)
-                    {
-                        Console.WriteLine($"CurrentThreadId {Thread.CurrentThread.ManagedThreadId} Processing item {order.ItemName}");
-                        this.FindItem(order);
-                        this.PackItem(order);
-                        this.ShipItem(order);
-                    }
+                }
+                if (order != default)
+                {
+                    Console.WriteLine($"CurrentThreadId {Thread.CurrentThread.ManagedThreadId} Processing item {order.ItemName}");
+                    this.FindItem(order);
+                    this.PackItem(order);
+                    this.ShipItem(order);
                 }
             }
         }
