@@ -21,19 +21,21 @@ namespace Lesson7
         {
             while (true)
             {
-                PurchasedOrder order;
-                if (ordersQueue.Count == 0)
-                {
-                    break;
-                }
+                var order = default(PurchasedOrder);
                 lock (lockObject)
                 {
-                    order = ordersQueue.Dequeue();
+                    if (ordersQueue.Count > 0)
+                    {
+                        order = ordersQueue.Dequeue();
+                    }
                 }
-                Console.WriteLine($"Processing item: {order.ItemName}");
-                this.FindItem(order);
-                this.PackItem(order);
-                this.ShipItem(order);
+                if (order != default)
+                {
+                    Console.WriteLine($"Processing item: {order.ItemName}");
+                    this.FindItem(order);
+                    this.PackItem(order);
+                    this.ShipItem(order);
+                }
             }
         }
 

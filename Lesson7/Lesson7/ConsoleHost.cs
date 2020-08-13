@@ -14,28 +14,26 @@ namespace Lesson7
             var orders3 = this.GetPurchases3();
 
             object lockObject = new object();
-            var orderProducer1 = new PurchasedOrdersProducer(orders1, lockObject);
-            var orderProcessor1 = new PurchasedOrderProcessor(orderProducer1.GetOrdersQueue().As<Queue<PurchasedOrder>>(), lockObject);
+            var orderProducer1 = new PurchasedOrdersProducer(lockObject);
+            var orderProducer2 = new PurchasedOrdersProducer(lockObject);
+            var orderProducer3 = new PurchasedOrdersProducer(lockObject);
 
-            var orderProducer2 = new PurchasedOrdersProducer(orders2, lockObject);
+            var orderProcessor1 = new PurchasedOrderProcessor(orderProducer1.GetOrdersQueue().As<Queue<PurchasedOrder>>(), lockObject);
             var orderProcessor2 = new PurchasedOrderProcessor(orderProducer2.GetOrdersQueue().As<Queue<PurchasedOrder>>(), lockObject);
-            
-            var orderProducer3 = new PurchasedOrdersProducer(orders3, lockObject);
             var orderProcessor3 = new PurchasedOrderProcessor(orderProducer3.GetOrdersQueue().As<Queue<PurchasedOrder>>(), lockObject);
 
             Thread orderProducerThread1 = new Thread(orderProducer1.Produce);
-            Thread orderProcessorThread1 = new Thread(orderProcessor1.ProcessItem);
-            orderProducerThread1.Start();
-            orderProcessorThread1.Start();
-
             Thread orderProducerThread2 = new Thread(orderProducer2.Produce);
-            Thread orderProcessorThread2 = new Thread(orderProcessor2.ProcessItem);
-            orderProducerThread2.Start();
-            orderProcessorThread2.Start();
-
             Thread orderProducerThread3 = new Thread(orderProducer3.Produce);
-            Thread orderProcessorThread3 = new Thread(orderProcessor3.ProcessItem);
+            orderProducerThread1.Start();
+            orderProducerThread2.Start();
             orderProducerThread3.Start();
+            
+            Thread orderProcessorThread1 = new Thread(orderProcessor1.ProcessItem);
+            Thread orderProcessorThread2 = new Thread(orderProcessor2.ProcessItem);
+            Thread orderProcessorThread3 = new Thread(orderProcessor3.ProcessItem);
+            orderProcessorThread1.Start();
+            orderProcessorThread2.Start();
             orderProcessorThread3.Start();
         }
 

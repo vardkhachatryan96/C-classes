@@ -1,30 +1,40 @@
 ﻿using Lesson7.DAL.Models;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Lesson7
 {
     class PurchasedOrdersProducer
     {
         readonly object lockObject;
-        private readonly IEnumerable<PurchasedOrder> orders;
         private readonly Queue<PurchasedOrder> ordersQueue;
+        private static int itemNum;
 
-        public PurchasedOrdersProducer(IEnumerable<PurchasedOrder> orders, object lockObject)
+        public PurchasedOrdersProducer(object lockObject)
         {
             this.lockObject = lockObject;
             this.ordersQueue = new Queue<PurchasedOrder>();
-            this.orders = orders;
         }
 
         public void Produce()
         {
-            foreach (var order in this.orders)
+            while (true)
             {
-                lock (lockObject)
+                for (int i = 0; i < 5; i++)
                 {
-                    this.ordersQueue.Enqueue(order);
+                    var newOrder = this.GenerateOrder(itemNum++);
+                    lock (lockObject)
+                    {
+                        this.ordersQueue.Enqueue(newOrder);
+                    }
                 }
+                Thread.Sleep(5000);
             }
+        }
+
+        private PurchasedOrder GenerateOrder(int orderNum)
+        {
+            return new PurchasedOrder { ItemId = orderNum, ItemName = $"Item{orderNum}", Count = 2, DeliveryAddress = $"Address{orderNum}" };
         }
 
         public IEnumerable<PurchasedOrder> GetOrdersQueue()
