@@ -1,4 +1,5 @@
 ﻿using Lesson7.DAL.Models;
+using Lesson7.Extend;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -14,13 +15,13 @@ namespace Lesson7
 
             object lockObject = new object();
             var orderProducer1 = new PurchasedOrdersProducer(orders1, lockObject);
-            var orderProcessor1 = new PurchasedOrderProcessor(orderProducer1.GetOrdersQueue(), lockObject);
+            var orderProcessor1 = new PurchasedOrderProcessor(orderProducer1.GetOrdersQueue().As<Queue<PurchasedOrder>>(), lockObject);
 
             var orderProducer2 = new PurchasedOrdersProducer(orders2, lockObject);
-            var orderProcessor2 = new PurchasedOrderProcessor(orderProducer2.GetOrdersQueue(), lockObject);
+            var orderProcessor2 = new PurchasedOrderProcessor(orderProducer2.GetOrdersQueue().As<Queue<PurchasedOrder>>(), lockObject);
             
             var orderProducer3 = new PurchasedOrdersProducer(orders3, lockObject);
-            var orderProcessor3 = new PurchasedOrderProcessor(orderProducer3.GetOrdersQueue(), lockObject);
+            var orderProcessor3 = new PurchasedOrderProcessor(orderProducer3.GetOrdersQueue().As<Queue<PurchasedOrder>>(), lockObject);
 
             Thread orderProducerThread1 = new Thread(orderProducer1.Produce);
             Thread orderProcessorThread1 = new Thread(orderProcessor1.ProcessItem);

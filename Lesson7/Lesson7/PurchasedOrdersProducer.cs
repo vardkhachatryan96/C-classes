@@ -27,7 +27,7 @@ namespace Lesson7
             }
         }
 
-        public Queue<PurchasedOrder> GetOrdersQueue()
+        public IEnumerable<PurchasedOrder> GetOrdersQueue()
         {
             return this.ordersQueue;
         }
