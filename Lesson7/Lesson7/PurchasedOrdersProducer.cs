@@ -5,11 +5,13 @@ namespace Lesson7
 {
     class PurchasedOrdersProducer
     {
+        readonly object lockObject;
         private readonly IEnumerable<PurchasedOrder> orders;
         private readonly Queue<PurchasedOrder> ordersQueue;
 
-        public PurchasedOrdersProducer(IEnumerable<PurchasedOrder> orders)
+        public PurchasedOrdersProducer(IEnumerable<PurchasedOrder> orders, object lockObject)
         {
+            this.lockObject = lockObject;
             this.ordersQueue = new Queue<PurchasedOrder>();
             this.orders = orders;
         }
@@ -18,7 +20,10 @@ namespace Lesson7
         {
             foreach (var order in this.orders)
             {
-                this.ordersQueue.Enqueue(order);
+                lock (lockObject)
+                {
+                    this.ordersQueue.Enqueue(order);
+                }
             }
         }
 

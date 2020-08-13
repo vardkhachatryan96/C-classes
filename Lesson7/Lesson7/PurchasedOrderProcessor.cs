@@ -7,31 +7,33 @@ namespace Lesson7
 {
     class PurchasedOrderProcessor
     {
-        readonly object lockObject = new object();
+        readonly object lockObject;
 
         private readonly Queue<PurchasedOrder> ordersQueue;
 
-        public PurchasedOrderProcessor(Queue<PurchasedOrder> ordersQueue)
+        public PurchasedOrderProcessor(Queue<PurchasedOrder> ordersQueue, object lockObject)
         {
             this.ordersQueue = ordersQueue;
+            this.lockObject = lockObject;
         }
 
         public void ProcessItem()
         {
             while (true)
             {
+                PurchasedOrder order;
+                if (ordersQueue.Count == 0)
+                {
+                    break;
+                }
                 lock (lockObject)
                 {
-                    if (ordersQueue.Count == 0)
-                    {
-                        break;
-                    }
-                    var order = ordersQueue.Dequeue();
-                    Console.WriteLine($"Processing item: {order.ItemName}");
-                    this.FindItem(order);
-                    this.PackItem(order);
-                    this.ShipItem(order);
+                    order = ordersQueue.Dequeue();
                 }
+                Console.WriteLine($"Processing item: {order.ItemName}");
+                this.FindItem(order);
+                this.PackItem(order);
+                this.ShipItem(order);
             }
         }
 

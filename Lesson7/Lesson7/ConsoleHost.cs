@@ -20,11 +20,13 @@ namespace Lesson7
 
             var allOrders = this._purchasedOrdersRepository.GetAllPurchases();
 
-            var orderProducer = new PurchasedOrdersProducer(allOrders);
+            object lockObject = new object();
+
+            var orderProducer = new PurchasedOrdersProducer(allOrders, lockObject);
             Thread orderProducerThread = new Thread(orderProducer.Produce);
             orderProducerThread.Start();
 
-            var orderProcessor = new PurchasedOrderProcessor(orderProducer.GetOrdersQueue());
+            var orderProcessor = new PurchasedOrderProcessor(orderProducer.GetOrdersQueue(), lockObject);
             Thread orderProcessorThread = new Thread(orderProcessor.ProcessItem);
             orderProcessorThread.Start();
         }
