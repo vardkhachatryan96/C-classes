@@ -12,5 +12,9 @@
     <ProjectReference Include="..\WeatherMonitoringStation.BL\WeatherMonitoringStation.BL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Log\" />
+  </ItemGroup>
+
 
 </Project>

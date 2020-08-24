@@ -18,7 +18,7 @@ namespace WeatherMonitoringStation.Controllers
     public class WeatherStationController : ControllerBase
     {
         private static readonly HttpClient client = new HttpClient();
-        private readonly ILog log = LogBuilder.Get(MethodBase.GetCurrentMethod()?.DeclaringType);
+        private readonly ILog log = LoggerBuilder.Get(MethodBase.GetCurrentMethod()?.DeclaringType);
 
         private readonly IConfiguration config;
         private readonly IWeatherInformationService weatherInformationService;
