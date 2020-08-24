@@ -6,7 +6,7 @@ namespace WeatherMonitoringStation.Models
     {
         public string CityName { get; set; }
 
-        public float? Temprature { get; set; }
+        public float? Temperature { get; set; }
 
         public int? Pressure { get; set; }
 

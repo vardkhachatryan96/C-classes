@@ -12,7 +12,7 @@ namespace WeatherMonitoringStation.Mappers
             {
                 CityName = model.name ?? string.Empty,
                 Humadity = model?.main?.humidity,
-                Temprature = model?.main?.temp,
+                Temperature = model?.main?.temp,
                 Pressure = model?.main?.pressure,
                 Date = DateTime.Now
             };

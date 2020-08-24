@@ -45,7 +45,7 @@ namespace WeatherMonitoringStation.Controllers
             }
 
             this.log.Info($"Successfully completed getting current weather info of {city}");
-            return new JsonResult($"The current weather information of {city} is\n{CurrentWeatherMapper.Map(response)}");
+            return new JsonResult(CurrentWeatherMapper.Map(response));
         }
 
         [HttpGet("{city}/{from}/{to}")]
