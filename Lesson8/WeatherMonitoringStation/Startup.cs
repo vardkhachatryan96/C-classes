@@ -1,18 +1,22 @@
-using EasyCaching.Core.Configurations;
-using Lesson8.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WeatherMonitoringStation.BL.Api;
+using WeatherMonitoringStation.BL.Services;
+using WeatherMonitoringStation.DAL;
+using WeatherMonitoringStation.DAL.Api;
+using WeatherMonitoringStation.DAL.Repositories;
 
-namespace Lesson8
+namespace WeatherMonitoringStation
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -21,16 +25,12 @@ namespace Lesson8
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddEasyCaching(options =>
-            {
-                options.UseRedis(redisConfig =>
-                {
-                    redisConfig.DBConfig.Endpoints.Add(new ServerEndPoint("localhost", 44322));
-                    redisConfig.DBConfig.AllowAdmin = true;
-                },
-                "redis");
-            });
-            services.AddTransient<CacheController, CacheController>();
+            
+            services.AddDbContext<WeatherMonitoringStationDbContext>(options => 
+                                options.UseSqlServer(this.Configuration.GetConnectionString("dbConnection")));
+
+            services.AddScoped<IWeatherInformationService, WeatherInformationService>();
+            services.AddScoped<IWeatherInformationRepository, WeatherInformationRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

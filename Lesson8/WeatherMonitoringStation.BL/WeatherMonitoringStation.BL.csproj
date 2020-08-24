@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Api\NewFolder\**" />
+    <EmbeddedResource Remove="Api\NewFolder\**" />
+    <None Remove="Api\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WeatherMonitoringStation.DAL\WeatherMonitoringStation.DAL.csproj" />
+  </ItemGroup>
+
+</Project>

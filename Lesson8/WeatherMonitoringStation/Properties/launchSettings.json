@@ -4,23 +4,23 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:50187",
-      "sslPort": 44322
+      "applicationUrl": "http://localhost:56623",
+      "sslPort": 44330
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "home",
+      "launchUrl": "weatherstation",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Lesson8": {
+    "WeatherMonitoringStation": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "home",
+      "launchUrl": "weatherstation",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
