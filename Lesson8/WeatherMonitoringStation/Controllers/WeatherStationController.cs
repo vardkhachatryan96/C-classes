@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Net.Http;
-using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WeatherMonitoringStation.BL.Api;
-using WeatherMonitoringStation.Log;
 using WeatherMonitoringStation.Mappers;
 using WeatherMonitoringStation.Models.JsonModel;
 
@@ -18,30 +16,30 @@ namespace WeatherMonitoringStation.Controllers
     public class WeatherStationController : ControllerBase
     {
         private static readonly HttpClient client = new HttpClient();
-        private readonly ILog log = LoggerBuilder.Get(MethodBase.GetCurrentMethod()?.DeclaringType);
+        private readonly IConfiguration configuration;
+        private readonly ILog log;
+        private readonly IWeatherInformationService weatherInfoService;
 
-        private readonly IConfiguration config;
-        private readonly IWeatherInformationService weatherInformationService;
-
-        public WeatherStationController(IConfiguration config, IWeatherInformationService weatherInformationService)
+        public WeatherStationController(IConfiguration configuration, ILog log, IWeatherInformationService weatherInformationService)
         {
-            this.config = config;
-            this.weatherInformationService = weatherInformationService;
+            this.configuration = configuration;
+            this.log = log;
+            this.weatherInfoService = weatherInformationService;
         }
 
         [HttpGet("{city}")]
-        public async Task<JsonResult> GetCurWeatherOf(string city)
+        public async Task<JsonResult> GetCurrentWeatherOf(string city)
         {
-            var key = config.GetValue<string>("apiKey");
+            var key = this.configuration.GetValue<string>("ApiKey");
             var response = new WeatherJsonModel();
             try
             {
-                var streamTask = client.GetStreamAsync($"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={key}");
+                var streamTask = client.GetStreamAsync($"https://api.openweathermap.org/data/2.5/weather?q={city},uk&APPID={key}");
                 response = await JsonSerializer.DeserializeAsync<WeatherJsonModel>(await streamTask);
             }
             catch (Exception ex)
             {
-                this.log.Error(ex);
+                this.log.Error(ex.Message);
             }
 
             this.log.Info($"Successfully completed getting current weather info of {city}");
@@ -56,7 +54,7 @@ namespace WeatherMonitoringStation.Controllers
                 this.log.Error("The from parameter is not in correct format");
                 return new JsonResult("Bad Request: The specified start date parameter is not in correct format");
             }
-            
+
             if (!DateTime.TryParse(to, out var dateTimeTo))
             {
                 this.log.Error("The to parameter is not in correct format");
@@ -64,7 +62,7 @@ namespace WeatherMonitoringStation.Controllers
             }
 
             this.log.Info($"Successfully completed getting average temprature of {city} from {dateTimeFrom} to {dateTimeTo}");
-            var result = await this.weatherInformationService.GetCityAverageTemp(city, dateTimeFrom, dateTimeTo);
+            var result = await this.weatherInfoService.GetCityAverageTemp(city, dateTimeFrom, dateTimeTo);
 
             return new JsonResult($"The average temprature of {city} from {dateTimeFrom} to {dateTimeTo} is: {result}");
         }

@@ -4,20 +4,20 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:51520",
-      "sslPort": 44341
+      "applicationUrl": "http://localhost:51074",
+      "sslPort": 44397
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "weatherstation/GetCurrentWeatherOf/London",
+      "launchUrl": "weatherforecast",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "WeatherMonitoringStation": {
+    "WebApplication1": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
